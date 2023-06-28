@@ -20,7 +20,7 @@ public class CityServiceImpl implements CityService{
     
     public void validateName(City city) {
         City busca = repository.findByName(city.getName());
-        if (busca == null && busca.getId() != city.getId()) {
+        if (busca != null && busca.getId() != city.getId()) {
             throw new IntegrityViolation("Essa cidade já está cadastrada");
         }
     }
