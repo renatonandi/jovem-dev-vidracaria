@@ -11,7 +11,7 @@ import br.com.trier.spring.models.PhoneNumber;
 @Repository
 public interface PhoneNumberRepository extends JpaRepository<PhoneNumber, Integer>{
     
-    PhoneNumber findByNumber(String number);
+    PhoneNumber findByNumberContaining(String number);
     
     List<PhoneNumber> findByCustomer(Customer customer);
 

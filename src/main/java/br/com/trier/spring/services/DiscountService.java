@@ -16,6 +16,6 @@ public interface DiscountService {
 
     List<Discount> listAll();
     
-    List<Discount> findByDescription(String description);
+    List<Discount> findByDiscount(Integer discoun);
 
 }

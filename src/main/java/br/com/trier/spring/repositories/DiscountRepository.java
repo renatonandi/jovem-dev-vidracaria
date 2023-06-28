@@ -10,6 +10,6 @@ import br.com.trier.spring.models.Discount;
 @Repository
 public interface DiscountRepository extends JpaRepository<Discount, Integer>{
     
-    List<Discount> findByDescription(String description);
+    List<Discount> findByDiscount(Integer discount);
     
 }

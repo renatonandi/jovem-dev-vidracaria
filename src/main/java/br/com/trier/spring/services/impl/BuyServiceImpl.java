@@ -10,7 +10,6 @@ import br.com.trier.spring.models.Buy;
 import br.com.trier.spring.models.ProductRequest;
 import br.com.trier.spring.repositories.BuyRepository;
 import br.com.trier.spring.services.BuyService;
-import br.com.trier.spring.services.exceptions.IntegrityViolation;
 import br.com.trier.spring.services.exceptions.ObjectNotFound;
 
 @Service
@@ -19,12 +18,6 @@ public class BuyServiceImpl implements BuyService{
     @Autowired
     private BuyRepository repository;
     
-    public void validateBuy() {
-        Buy buy = new Buy();
-        if (buy.getProductRequest() == null) {
-            throw new IntegrityViolation("O pedido/produto é obrigatório");
-        }
-    }
     
     @Override
     public Buy findById(Integer id) {
@@ -34,14 +27,12 @@ public class BuyServiceImpl implements BuyService{
 
     @Override
     public Buy insert(Buy buy) {
-        validateBuy();
         return repository.save(buy);
     }
 
     @Override
     public Buy update(Buy buy) {
         findById(buy.getId());
-        validateBuy();
         return repository.save(buy);
     }
 
@@ -57,7 +48,7 @@ public class BuyServiceImpl implements BuyService{
     public List<Buy> listAll() {
         List<Buy> list = repository.findAll();
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhum registro cadastrado");
+            throw new ObjectNotFound("Nenhuma compra cadastrada");
         }
         return list;
     }

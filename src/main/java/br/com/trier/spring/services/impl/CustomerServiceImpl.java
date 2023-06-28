@@ -1,6 +1,7 @@
 package br.com.trier.spring.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,59 +11,73 @@ import br.com.trier.spring.models.Customer;
 import br.com.trier.spring.models.Discount;
 import br.com.trier.spring.repositories.CustomerRepository;
 import br.com.trier.spring.services.CustomerService;
+import br.com.trier.spring.services.exceptions.ObjectNotFound;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
     
     @Autowired
     private CustomerRepository repository;
-
+    
     @Override
     public Customer findById(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
+        Optional<Customer> customer = repository.findById(id);
+        return customer.orElseThrow(() -> new ObjectNotFound("Cliente %s não existe".formatted(id)));
     }
 
     @Override
     public Customer insert(Customer customer) {
-        // TODO Auto-generated method stub
-        return null;
+        return repository.save(customer);
     }
 
     @Override
     public Customer update(Customer customer) {
-        // TODO Auto-generated method stub
-        return null;
+        findById(customer.getId());
+        return repository.save(customer);
     }
 
     @Override
     public void delete(Integer id) {
-        // TODO Auto-generated method stub
-        
+        Customer customer = findById(id);
+        if (customer != null) {
+            repository.delete(customer);
+        }
     }
 
     @Override
     public List<Customer> listAll() {
-        // TODO Auto-generated method stub
-        return null;
+        List<Customer> list = repository.findAll();
+        if (list.isEmpty()) {
+            throw new ObjectNotFound("Nenhum cliente cadastrado");
+        }
+        return list;
     }
 
     @Override
     public List<Customer> findByNameContainingIgnoreCase(String name) {
-        // TODO Auto-generated method stub
-        return null;
+        List<Customer> list = repository.findByNameContainingIgnoreCase(name);
+        if (list.isEmpty()) {
+            throw new ObjectNotFound("Nenhum cliente encontrado para esse nome %s".formatted(name));
+        }
+        return list;
     }
 
     @Override
     public List<Customer> findByAddress(Address address) {
-        // TODO Auto-generated method stub
-        return null;
+        List<Customer> list = repository.findByAddress(address);
+        if (list.isEmpty()) {
+            throw new ObjectNotFound("Nenhum cliene encontrado para esse endereço %s".formatted(address));
+        }
+        return list;
     }
 
     @Override
     public List<Customer> findByDiscount(Discount discount) {
-        // TODO Auto-generated method stub
-        return null;
+        List<Customer> list = repository.findByDiscount(discount);
+        if (list.isEmpty()) {
+            throw new ObjectNotFound("Nenhum cliente encontrado para esse desconto %s".formatted(discount));
+        }
+        return list;
     }
 
 }

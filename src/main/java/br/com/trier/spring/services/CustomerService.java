@@ -8,13 +8,14 @@ import br.com.trier.spring.models.Discount;
 
 public interface CustomerService {
 
-    Customer findById(Integer id);
 
     Customer insert(Customer customer);
 
     Customer update(Customer customer);
 
     void delete(Integer id);
+
+    Customer findById(Integer id);
 
     List<Customer> listAll();
 

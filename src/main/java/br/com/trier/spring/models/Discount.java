@@ -26,7 +26,7 @@ public class Discount {
     private Integer id;
     
     @NotNull
-    @Column(name = "descricao_desconto")
-    private String description;
+    @Column(name = "desconto")
+    private Integer discount;
 
 }

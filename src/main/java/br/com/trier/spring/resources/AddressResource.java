@@ -71,9 +71,9 @@ public class AddressResource {
 		return ResponseEntity.ok(service.findByNeighborhoodContainingIgnoreCaseAndStreetContainingIgnoreCase(neighborhood, street));
 	}
 
-	@GetMapping("/cidade/{city}")
-	public ResponseEntity<List<Address>> findByCity(@PathVariable City city) {
-		return ResponseEntity.ok(service.findByCityContaining(city));
+	@GetMapping("/cidade/{idCity}")
+	public ResponseEntity<List<Address>> findByCity(@PathVariable Integer idCity) {
+		return ResponseEntity.ok(service.findByCityContaining(cityService.findById(idCity)));
 	}
 
 }
