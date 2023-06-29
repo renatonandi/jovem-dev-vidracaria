@@ -23,6 +23,6 @@ public interface AddressService {
 
     List<Address> findByNeighborhoodContainingIgnoreCaseAndStreetContainingIgnoreCase(String neighborhood, String street);
 
-    List<Address> findByCityContaining(City city);
+    List<Address> findByCity(City city);
     
 }

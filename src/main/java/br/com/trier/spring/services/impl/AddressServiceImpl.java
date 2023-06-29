@@ -13,7 +13,7 @@ import br.com.trier.spring.services.AddressService;
 import br.com.trier.spring.services.exceptions.ObjectNotFound;
 
 @Service
-public class AddresServiceImpl implements AddressService{
+public class AddressServiceImpl implements AddressService{
 
     @Autowired
     private AddressRepository repository;
@@ -48,7 +48,7 @@ public class AddresServiceImpl implements AddressService{
     public List<Address> listAll() {
         List<Address> list = repository.findAll();
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nem um endereço cadastrado");
+            throw new ObjectNotFound("Nenhum endereço cadastrado");
         }
         return list;
     }
@@ -66,7 +66,7 @@ public class AddresServiceImpl implements AddressService{
     public List<Address> findByNeighborhoodContainingIgnoreCase(String neighborhood) {
         List<Address> list = repository.findByNeighborhoodContainingIgnoreCase(neighborhood);
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhuma endereço encontrado para esse bairro %s".formatted(neighborhood));
+            throw new ObjectNotFound("Nenhum endereço encontrado para esse bairro %s".formatted(neighborhood));
         }
         return list;
     }
@@ -82,8 +82,8 @@ public class AddresServiceImpl implements AddressService{
     }
 
     @Override
-    public List<Address> findByCityContaining(City city) {
-        List<Address> list = repository.findByCityContaining(city);
+    public List<Address> findByCity(City city) {
+        List<Address> list = repository.findByCity(city);
         if (list.isEmpty()) {
             throw new ObjectNotFound("Nenhum endereço encontrado para essa cidade %s".formatted(city.getName()));
         }

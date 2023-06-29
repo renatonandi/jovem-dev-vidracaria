@@ -73,7 +73,7 @@ public class AddressResource {
 
 	@GetMapping("/cidade/{idCity}")
 	public ResponseEntity<List<Address>> findByCity(@PathVariable Integer idCity) {
-		return ResponseEntity.ok(service.findByCityContaining(cityService.findById(idCity)));
+		return ResponseEntity.ok(service.findByCity(cityService.findById(idCity)));
 	}
 
 }

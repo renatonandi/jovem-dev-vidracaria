@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService{
     public Customer insert(Customer customer) {
         return repository.save(customer);
     }
-
+ 
     @Override
     public Customer update(Customer customer) {
         findById(customer.getId());
@@ -66,7 +66,7 @@ public class CustomerServiceImpl implements CustomerService{
     public List<Customer> findByAddress(Address address) {
         List<Customer> list = repository.findByAddress(address);
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhum cliene encontrado para esse endereço %s".formatted(address));
+            throw new ObjectNotFound("Nenhum cliente encontrado para esse endereço: %s , %s e %s".formatted(address.getStreet(), address.getNeighborhood(), address.getCity().getName()));
         }
         return list;
     }
@@ -75,7 +75,7 @@ public class CustomerServiceImpl implements CustomerService{
     public List<Customer> findByDiscount(Discount discount) {
         List<Customer> list = repository.findByDiscount(discount);
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhum cliente encontrado para esse desconto %s".formatted(discount));
+            throw new ObjectNotFound("Nenhum cliente encontrado para esse desconto %s".formatted(discount.getDiscount()));
         }
         return list;
     }

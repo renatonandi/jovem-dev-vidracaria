@@ -30,7 +30,7 @@ public class SaleResource {
     private RequestService requestService;
     
     @Autowired
-    private ProductService productService;
+    private ProductService productService; 
     
     @PostMapping
     public ResponseEntity<SaleDTO> insert(@RequestBody SaleDTO productRequestDTO) {

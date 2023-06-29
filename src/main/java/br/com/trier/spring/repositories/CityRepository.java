@@ -14,7 +14,7 @@ public interface CityRepository extends JpaRepository<City, Integer>{
     
     List<City> findByNameContainingIgnoreCaseAndUfIgnoreCase(String name, String uf);
     
-    List<City> findByUf(String uf);
+    List<City> findByUfIgnoreCase(String uf);
     
     City findByNameIgnoreCase(String name);
     

@@ -55,7 +55,7 @@ public class DiscountServiceImpl implements DiscountService{
     public List<Discount> findByDiscount(Integer discount) {
         List<Discount> list = repository.findByDiscount(discount);
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhum desconto encontrado para essa descrição %s".formatted(discount));
+            throw new ObjectNotFound("Nenhum desconto encontrado para esse valor %s".formatted(discount));
         }
         return list;
     }

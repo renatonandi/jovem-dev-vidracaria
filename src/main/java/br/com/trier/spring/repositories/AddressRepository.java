@@ -17,6 +17,6 @@ public interface AddressRepository extends JpaRepository<Address, Integer>{
     
     List<Address> findByNeighborhoodContainingIgnoreCaseAndStreetContainingIgnoreCase(String neighborhood, String street);
     
-    List<Address> findByCityContaining(City city);
+    List<Address> findByCity(City city);
 
 }

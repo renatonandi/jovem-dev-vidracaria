@@ -31,7 +31,7 @@ public class Address {
     private String street;
     
     @NotNull
-    @Column(name = "bairro_ endereco")
+    @Column(name = "bairro_endereco")
     private String neighborhood;
     
     @ManyToOne

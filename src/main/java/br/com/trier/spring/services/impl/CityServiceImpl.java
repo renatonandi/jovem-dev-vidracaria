@@ -81,7 +81,7 @@ public class CityServiceImpl implements CityService{
 
     @Override
     public List<City> findByUf(String uf) {
-        List<City> list = repository.findByUf(uf);
+        List<City> list = repository.findByUfIgnoreCase(uf);
         if (list.isEmpty()) {
             throw new ObjectNotFound("Nenhuma cidade encontrada para essa UF %s".formatted(uf));
         }

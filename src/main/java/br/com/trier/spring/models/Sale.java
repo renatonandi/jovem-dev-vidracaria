@@ -17,13 +17,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(of = "id")
-@Entity(name = "produto_pedido")
+@Entity(name = "venda")
 public class Sale {
     
     @Id
     @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_produto_pedido")
+    @Column(name = "id_venda")
     private Integer id;
     
     @Column(name = "tamanho_produto")
