@@ -12,6 +12,6 @@ public interface TypeRepository extends JpaRepository<Type, Integer>{
     
     List<Type> findByDescriptionContainingIgnoreCase(String description);
     
-    Type findByDescription(String description);
+    Type findByDescriptionIgnoreCase(String description);
 
 }

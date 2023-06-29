@@ -1,5 +1,6 @@
 package br.com.trier.spring.models;
 
+import br.com.trier.spring.models.DTO.CustomerDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,5 +36,13 @@ public class Customer {
     
     @ManyToOne
     private Discount discount;
+    
+    public Customer(CustomerDTO dto, Address address, Discount discount) {
+    	this(dto.getId(), dto.getName(), address, discount);
+    }
+    
+    public CustomerDTO toDTO() {
+    	return new CustomerDTO(id, name, address.getId(), address.getCity().getName(), discount.getId());
+    }
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.trier.spring.models.Request;
+import br.com.trier.spring.models.DTO.RequestDTO;
 import br.com.trier.spring.services.CustomerService;
 import br.com.trier.spring.services.RequestService;
 
@@ -28,14 +29,15 @@ public class RequestResource {
     private CustomerService customerService;
     
     @PostMapping
-    public ResponseEntity<Request> insert(@RequestBody Request request) {
-        return ResponseEntity.ok(service.insert(request));
+    public ResponseEntity<RequestDTO> insert(@RequestBody RequestDTO requestDTO) {
+        return ResponseEntity.ok(service.insert(new Request(requestDTO, customerService.findById(requestDTO.getCustomerId()))).toDTO());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Request> update(@PathVariable Integer id, @RequestBody Request request) {
-        request.setId(id);
-        return ResponseEntity.ok(service.update(request));
+    public ResponseEntity<RequestDTO> update(@PathVariable Integer id, @RequestBody RequestDTO requestDTO) {
+        Request request = new Request(requestDTO, customerService.findById(requestDTO.getId()));
+    	request.setId(id);
+        return ResponseEntity.ok(service.update(request).toDTO());
     }
 
     @DeleteMapping("/{id}")
@@ -45,13 +47,13 @@ public class RequestResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Request> findById(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<RequestDTO> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.findById(id).toDTO());
     }
 
     @GetMapping
-    public ResponseEntity<List<Request>> listAll() {
-        return ResponseEntity.ok(service.listAll());
+    public ResponseEntity<List<RequestDTO>> listAll() {
+        return ResponseEntity.ok(service.listAll().stream().map((request -> request.toDTO())).toList());
     }
     
     @GetMapping("/descricao/{description}")

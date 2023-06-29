@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.trier.spring.models.Customer;
+import br.com.trier.spring.models.DTO.CustomerDTO;
 import br.com.trier.spring.services.AddressService;
 import br.com.trier.spring.services.CustomerService;
 import br.com.trier.spring.services.DiscountService;
@@ -32,16 +33,15 @@ public class CustomerResource {
     private DiscountService discountService;
     
     @PostMapping
-    public ResponseEntity<Customer> insert(@RequestBody Customer customer) {
-        addressService.findById(customer.getAddress().getId());
-        discountService.findById(customer.getDiscount().getId());
-        return ResponseEntity.ok(service.insert(customer));
+    public ResponseEntity<CustomerDTO> insert(@RequestBody CustomerDTO customerDTO) {
+        return ResponseEntity.ok(service.insert(new Customer(customerDTO, addressService.findById(customerDTO.getAddressId()), discountService.findById(customerDTO.getDiscountId()))).toDTO());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> update(@PathVariable Integer id, @RequestBody Customer customer) {
-        customer.setId(id);
-        return ResponseEntity.ok(service.update(customer));
+    public ResponseEntity<CustomerDTO> update(@PathVariable Integer id, @RequestBody CustomerDTO customerDTO) {
+        Customer customer = new Customer(customerDTO, addressService.findById(customerDTO.getId()), discountService.findById(customerDTO.getId()));
+    	customer.setId(id);
+        return ResponseEntity.ok(service.update(customer).toDTO());
     }
 
     @DeleteMapping("/{id}")
@@ -51,13 +51,13 @@ public class CustomerResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> findById(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<CustomerDTO> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.findById(id).toDTO());
     }
 
     @GetMapping
-    public ResponseEntity<List<Customer>> listAll() {
-        return ResponseEntity.ok(service.listAll());
+    public ResponseEntity<List<CustomerDTO>> listAll() {
+        return ResponseEntity.ok(service.listAll().stream().map((customer -> customer.toDTO())).toList());
     }
     
     @GetMapping("/nome/{name}")

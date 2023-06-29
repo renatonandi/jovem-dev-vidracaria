@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.trier.spring.models.Customer;
 import br.com.trier.spring.models.PhoneNumber;
+import br.com.trier.spring.models.Type;
 import br.com.trier.spring.repositories.PhoneNumberRepository;
 import br.com.trier.spring.services.PhoneNumberService;
 import br.com.trier.spring.services.exceptions.IntegrityViolation;
@@ -19,29 +20,27 @@ public class PhoneNumberServiceImpl implements PhoneNumberService{
     @Autowired
     private PhoneNumberRepository repository;
     
-    public String formatPhoneNumber(PhoneNumber phoneNumber) {
+    public void validPhoneNumber(PhoneNumber phoneNumber) {
         String onlyDigits = phoneNumber.getNumber().replaceAll("[^0-9]", "");
-        
         if (onlyDigits.length() != 11) {
             throw new IntegrityViolation("Número de telefone inálido");            
         }
-        
-        String cod = onlyDigits.substring(0,2);
-        String prefix = onlyDigits.substring(2,7);
-        String sulfix = onlyDigits.substring(7);
-        String formatedNumber = String.format("(%s) %s-%s".formatted(cod, prefix, sulfix));
-        return formatedNumber;
+        PhoneNumber busca = repository.findByNumberContaining(phoneNumber.getNumber());
+        if (busca != null && busca.getId() != phoneNumber.getId()) {
+            throw new IntegrityViolation("Esse numero de telefone já está cadastrado");
+        }
     }
     
     @Override
     public PhoneNumber findById(Integer id) {
         Optional<PhoneNumber> phoneNumber = repository.findById(id);
-        return phoneNumber.orElseThrow(() -> new ObjectNotFound("A cidade %s não existe".formatted(id)));
+        return phoneNumber.orElseThrow(() -> new ObjectNotFound("O numero de telefone %s não existe".formatted(id)));
     }
 
     @Override
     public PhoneNumber insert(PhoneNumber phoneNumber) {
-        formatPhoneNumber(phoneNumber);
+    	phoneNumber.formatedNumber(phoneNumber.getNumber());
+        validPhoneNumber(phoneNumber);
         return repository.save(phoneNumber);
     }
 

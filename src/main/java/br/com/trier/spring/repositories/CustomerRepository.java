@@ -17,5 +17,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer>{
     List<Customer> findByAddress(Address address);
     
     List<Customer> findByDiscount(Discount discount);
+    
+    
 
 }

@@ -19,16 +19,16 @@ public class TypeServiceImpl implements TypeService{
     private TypeRepository repository;
     
     public void validateName(Type type) {
-        Type busca = repository.findByDescription(type.getDescription());
+        Type busca = repository.findByDescriptionIgnoreCase(type.getDescription());
         if (busca != null && busca.getId() != type.getId()) {
-            throw new IntegrityViolation("Essa descrição já está cadastrada");
+            throw new IntegrityViolation("Esse tipo já está cadastrado");
         }
     }
 
     @Override
     public Type findById(Integer id) {
         Optional<Type> type = repository.findById(id);
-        return type.orElseThrow(() -> new ObjectNotFound("A descrição %s não existe".formatted(id)));
+        return type.orElseThrow(() -> new ObjectNotFound("O tipo %s não existe".formatted(id)));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class TypeServiceImpl implements TypeService{
     public List<Type> listAll() {
         List<Type> list = repository.findAll();
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhuma descrição cadastrada");
+            throw new ObjectNotFound("Nenhum tipo cadastrado");
         }
         return list;
     }
@@ -66,7 +66,7 @@ public class TypeServiceImpl implements TypeService{
     public List<Type> findByDescriptionContainingIgnoreCase(String description) {
         List<Type> list = repository.findByDescriptionContainingIgnoreCase(description);
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhuma descrição encontrada para esse nome %s".formatted(description));
+            throw new ObjectNotFound("Nenhum tipo encontrado para esse nome %s".formatted(description));
         }
         return list;
     }

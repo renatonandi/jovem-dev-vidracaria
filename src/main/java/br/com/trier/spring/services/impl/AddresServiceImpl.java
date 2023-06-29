@@ -7,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.trier.spring.models.Address;
-import br.com.trier.spring.models.Buy;
 import br.com.trier.spring.models.City;
 import br.com.trier.spring.repositories.AddressRepository;
 import br.com.trier.spring.services.AddressService;
-import br.com.trier.spring.services.exceptions.IntegrityViolation;
 import br.com.trier.spring.services.exceptions.ObjectNotFound;
 
 @Service

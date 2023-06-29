@@ -1,5 +1,6 @@
 package br.com.trier.spring.models;
 
+import br.com.trier.spring.models.DTO.SaleDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Getter
 @EqualsAndHashCode(of = "id")
 @Entity(name = "produto_pedido")
-public class ProductRequest {
+public class Sale {
     
     @Id
     @Setter
@@ -33,5 +34,14 @@ public class ProductRequest {
     
     @ManyToOne
     private Product product;
+    
+    
+    public Sale(SaleDTO dto, Request request, Product product) {
+    	this(dto.getId(), dto.getSize(), request, product);
+    }
+    
+    public SaleDTO toDTO() {
+    	return new SaleDTO(id, size, request.getId(), request.getDescription(), request.getCustomer().getId(), request.getCustomer().getName(), product.getId());
+    }
     
 }

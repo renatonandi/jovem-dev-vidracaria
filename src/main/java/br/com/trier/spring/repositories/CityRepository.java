@@ -16,6 +16,6 @@ public interface CityRepository extends JpaRepository<City, Integer>{
     
     List<City> findByUf(String uf);
     
-    City findByName(String name);
+    City findByNameIgnoreCase(String name);
     
 }

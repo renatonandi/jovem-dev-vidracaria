@@ -7,38 +7,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.trier.spring.models.Product;
-import br.com.trier.spring.models.ProductRequest;
+import br.com.trier.spring.models.Sale;
 import br.com.trier.spring.models.Request;
-import br.com.trier.spring.repositories.ProductRequestRepository;
-import br.com.trier.spring.services.ProductRequestService;
+import br.com.trier.spring.repositories.SaleRepository;
+import br.com.trier.spring.services.SaleService;
 import br.com.trier.spring.services.exceptions.ObjectNotFound;
 
 @Service
-public class ProductRequestServiceImpl implements ProductRequestService{
+public class SaleServiceImpl implements SaleService{
     
     @Autowired
-    private ProductRequestRepository repository;
+    private SaleRepository repository;
 
     @Override
-    public ProductRequest findById(Integer id) {
-        Optional<ProductRequest> productRequest = repository.findById(id);
+    public Sale findById(Integer id) {
+        Optional<Sale> productRequest = repository.findById(id);
         return productRequest.orElseThrow(() -> new ObjectNotFound("O produto/pedido %s não existe".formatted(id)));
     }
 
     @Override
-    public ProductRequest insert(ProductRequest productRequest) {
+    public Sale insert(Sale productRequest) {
         return repository.save(productRequest);
     }
 
     @Override
-    public ProductRequest update(ProductRequest productRequest) {
+    public Sale update(Sale productRequest) {
         findById(productRequest.getId());
         return repository.save(productRequest);
     }
 
     @Override
     public void delete(Integer id) {
-        ProductRequest productRequest = findById(id);
+        Sale productRequest = findById(id);
         if (productRequest != null) {
             repository.delete(productRequest);
         }
@@ -46,8 +46,8 @@ public class ProductRequestServiceImpl implements ProductRequestService{
     }
 
     @Override
-    public List<ProductRequest> listAll() {
-        List<ProductRequest> list = repository.findAll();
+    public List<Sale> listAll() {
+        List<Sale> list = repository.findAll();
         if (list.isEmpty()) {
             throw new ObjectNotFound("Nenhum produto/pedido cadastrado");
         }
@@ -55,8 +55,8 @@ public class ProductRequestServiceImpl implements ProductRequestService{
     }
 
     @Override
-    public List<ProductRequest> findByRequest(Request request) {
-        List<ProductRequest> list = repository.findByRequest(request);
+    public List<Sale> findByRequest(Request request) {
+        List<Sale> list = repository.findByRequest(request);
         if (list.isEmpty()) {
             throw new ObjectNotFound("Nenhum produto/pedido encontrado para esse pedido");
         }
@@ -64,8 +64,8 @@ public class ProductRequestServiceImpl implements ProductRequestService{
     }
 
     @Override
-    public List<ProductRequest> findByProduct(Product product) {
-        List<ProductRequest> list = repository.findByProduct(product);
+    public List<Sale> findByProduct(Product product) {
+        List<Sale> list = repository.findByProduct(product);
         if (list.isEmpty()) {
             throw new ObjectNotFound("Nenhum produto/pedido encontrado para esse produto");
         }
@@ -73,8 +73,8 @@ public class ProductRequestServiceImpl implements ProductRequestService{
     }
 
     @Override
-    public List<ProductRequest> findBySize(Double size) {
-        List<ProductRequest> list = repository.findBySize(size);
+    public List<Sale> findBySize(Double size) {
+        List<Sale> list = repository.findBySize(size);
         if (list.isEmpty()) {
             throw new ObjectNotFound("Nenhum produto/pedido encontrado para esse tamanho");
         }
