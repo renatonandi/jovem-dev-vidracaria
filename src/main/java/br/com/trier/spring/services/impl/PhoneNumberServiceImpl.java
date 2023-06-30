@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.trier.spring.models.Customer;
 import br.com.trier.spring.models.PhoneNumber;
-import br.com.trier.spring.models.Type;
 import br.com.trier.spring.repositories.PhoneNumberRepository;
 import br.com.trier.spring.services.PhoneNumberService;
 import br.com.trier.spring.services.exceptions.IntegrityViolation;
@@ -62,7 +61,7 @@ public class PhoneNumberServiceImpl implements PhoneNumberService{
     public List<PhoneNumber> listAll() {
         List<PhoneNumber> list = repository.findAll();
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhum numero de telefone cadastrad");
+            throw new ObjectNotFound("Nenhum numero de telefone cadastrado");
         }
         return list;
     }

@@ -32,5 +32,9 @@ public class City {
     @NotNull
     @Column(name = "uf_cidade")
     private String uf;
+    
+    public void toUpperUf(City city) {
+    	this.uf = city.getUf().toUpperCase();
+    }
 
 }

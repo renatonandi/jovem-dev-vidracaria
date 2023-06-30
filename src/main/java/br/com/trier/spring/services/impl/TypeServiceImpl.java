@@ -66,7 +66,7 @@ public class TypeServiceImpl implements TypeService{
     public List<Type> findByDescriptionContainingIgnoreCase(String description) {
         List<Type> list = repository.findByDescriptionContainingIgnoreCase(description);
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhum tipo encontrado para esse nome %s".formatted(description));
+            throw new ObjectNotFound("Nenhum tipo encontrado para essa descrição %s".formatted(description));
         }
         return list;
     }

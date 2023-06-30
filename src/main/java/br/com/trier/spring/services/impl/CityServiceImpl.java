@@ -24,6 +24,15 @@ public class CityServiceImpl implements CityService{
             throw new IntegrityViolation("Essa cidade já está cadastrada");
         }
     }
+    
+    public void validateUf(City city) {
+    	if (city.getUf().length() > 2) {
+			throw new IntegrityViolation("O estado não pode conter mais que dois caracteres");
+		}
+    	if (city.getUf().length() < 2) {
+    		throw new IntegrityViolation("O estado não pode conter menos que dois caracteres");
+    	}
+    }
 
     @Override
     public City findById(Integer id) {
@@ -34,6 +43,8 @@ public class CityServiceImpl implements CityService{
     @Override
     public City insert(City city) {
         validateName(city);
+        validateUf(city);
+        city.toUpperUf(city);
         return repository.save(city);
     }
 
@@ -41,6 +52,8 @@ public class CityServiceImpl implements CityService{
     public City update(City city) {
         findById(city.getId());
         validateName(city);
+        validateUf(city);
+        city.toUpperUf(city);
         return repository.save(city);
     }
 

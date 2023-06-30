@@ -22,7 +22,7 @@ public class SaleServiceImpl implements SaleService{
     @Override
     public Sale findById(Integer id) {
         Optional<Sale> productRequest = repository.findById(id);
-        return productRequest.orElseThrow(() -> new ObjectNotFound("O produto/pedido %s não existe".formatted(id)));
+        return productRequest.orElseThrow(() -> new ObjectNotFound("A venda %s não existe".formatted(id)));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class SaleServiceImpl implements SaleService{
     public List<Sale> listAll() {
         List<Sale> list = repository.findAll();
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhum produto/pedido cadastrado");
+            throw new ObjectNotFound("Nenhuma venda cadastrado");
         }
         return list;
     }
@@ -58,7 +58,7 @@ public class SaleServiceImpl implements SaleService{
     public List<Sale> findByRequest(Request request) {
         List<Sale> list = repository.findByRequest(request);
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhum produto/pedido encontrado para esse pedido");
+            throw new ObjectNotFound("Nenhuma venda encontrado para esse pedido");
         }
         return list;
     }
@@ -67,7 +67,7 @@ public class SaleServiceImpl implements SaleService{
     public List<Sale> findByProduct(Product product) {
         List<Sale> list = repository.findByProduct(product);
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhum produto/pedido encontrado para esse produto");
+            throw new ObjectNotFound("Nenhuma venda encontrado para esse produto");
         }
         return list;
     }
@@ -76,7 +76,7 @@ public class SaleServiceImpl implements SaleService{
     public List<Sale> findBySize(Double size) {
         List<Sale> list = repository.findBySize(size);
         if (list.isEmpty()) {
-            throw new ObjectNotFound("Nenhum produto/pedido encontrado para esse tamanho");
+            throw new ObjectNotFound("Nenhuma venda encontrado para esse tamanho");
         }
         return list;
     }

@@ -61,6 +61,18 @@ public class CityServiceTest extends BaseTests {
     }
 
     @Test
+    @DisplayName("Teste inserir cidade com UF invalida")
+    @Sql({ "classpath:/resources/sqls/city.sql" })
+    void insertCityInvalidUfTest() {
+    	City city = new City(4, "Teste1", "S");
+    	var exception = assertThrows(IntegrityViolation.class, () -> service.insert(city));
+    	assertEquals("O estado não pode conter menos que dois caracteres", exception.getMessage());
+    	City city2 = new City(4, "Teste1", "SSS");
+    	exception = assertThrows(IntegrityViolation.class, () -> service.insert(city2));
+    	assertEquals("O estado não pode conter mais que dois caracteres", exception.getMessage());
+    }
+
+    @Test
     @DisplayName("Teste alterar cidade")
     @Sql({ "classpath:/resources/sqls/city.sql" })
     void updateCityByIdTest() {

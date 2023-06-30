@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.trier.spring.models.Discount;
 import br.com.trier.spring.repositories.DiscountRepository;
 import br.com.trier.spring.services.DiscountService;
+import br.com.trier.spring.services.exceptions.IntegrityViolation;
 import br.com.trier.spring.services.exceptions.ObjectNotFound;
 
 @Service
@@ -16,6 +17,12 @@ public class DiscountServiceImpl implements DiscountService{
     
     @Autowired
     private DiscountRepository repository;
+    
+    public void validateValue(Discount discount) {
+    	if (discount.getDiscount() <= 0) {
+			throw new IntegrityViolation("Desconto inválido. Valor não pode ser menor ou igual a zero");
+		}
+    }
 
     @Override
     public Discount findById(Integer id) {
@@ -25,12 +32,14 @@ public class DiscountServiceImpl implements DiscountService{
 
     @Override
     public Discount insert(Discount discount) {
+    	validateValue(discount);
         return repository.save(discount);
     }
 
     @Override
     public Discount update(Discount discount) {
         findById(discount.getId());
+        validateValue(discount);
         return repository.save(discount);
     }
 
