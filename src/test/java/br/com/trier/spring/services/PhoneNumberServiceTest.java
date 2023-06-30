@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 
 import br.com.trier.spring.BaseTests;
-import br.com.trier.spring.models.Customer;
 import br.com.trier.spring.models.PhoneNumber;
 import br.com.trier.spring.services.exceptions.IntegrityViolation;
 import br.com.trier.spring.services.exceptions.ObjectNotFound;
@@ -72,7 +71,6 @@ public class PhoneNumberServiceTest extends BaseTests{
         assertEquals(1, search.getId());
         assertEquals("(48) 99630-0443", search.getNumber());
         assertEquals("Renato", search.getCustomer().getName());
-       
     }
 
     @Test

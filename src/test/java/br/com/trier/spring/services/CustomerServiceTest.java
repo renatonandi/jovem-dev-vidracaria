@@ -11,7 +11,6 @@ import org.springframework.test.context.jdbc.Sql;
 
 import br.com.trier.spring.BaseTests;
 import br.com.trier.spring.models.Customer;
-import br.com.trier.spring.models.Discount;
 import br.com.trier.spring.services.exceptions.ObjectNotFound;
 import jakarta.transaction.Transactional;
 
@@ -208,6 +207,41 @@ public class CustomerServiceTest extends BaseTests{
     void findByDiscountWrongTest() {
         var exception = assertThrows(ObjectNotFound.class, () -> service.findByDiscount(discountService.findById(3)));
         assertEquals("Nenhum cliente encontrado para esse desconto 15", exception.getMessage());
+    }
+    
+    @Test
+    @DisplayName("Teste de busca de clientes por nome e endereço")
+    @Sql({ "classpath:/resources/sqls/city.sql" })
+    @Sql({ "classpath:/resources/sqls/address.sql" })
+    @Sql({ "classpath:/resources/sqls/discount.sql" })
+    @Sql({ "classpath:/resources/sqls/customer.sql" })
+    void findByNameAndAddressTest() {
+        var list = service.findByNameContainingIgnoreCaseAndAddress("re", addressService.findById(1));
+        assertEquals(1, list.size());
+        assertEquals("Renato", list.get(0).getName());
+        assertEquals("Tubarão", list.get(0).getAddress().getCity().getName());
+    }
+    
+    @Test
+    @DisplayName("Teste de busca de clientes por nome e endereço incorreto")
+    @Sql({ "classpath:/resources/sqls/city.sql" })
+    @Sql({ "classpath:/resources/sqls/address.sql" })
+    @Sql({ "classpath:/resources/sqls/discount.sql" })
+    @Sql({ "classpath:/resources/sqls/customer.sql" })
+    void findByNameAndAddressWrongTest() {
+        var exception = assertThrows(ObjectNotFound.class, () -> service.findByNameContainingIgnoreCaseAndAddress("re",addressService.findById(2)));
+        assertEquals("Nenhum cliente encontrado para esse nome re e endereço rua RuaDeLaguna bairro BairroDeLaguna", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Teste de busca de clientes por nome incorreto e endereço")
+    @Sql({ "classpath:/resources/sqls/city.sql" })
+    @Sql({ "classpath:/resources/sqls/address.sql" })
+    @Sql({ "classpath:/resources/sqls/discount.sql" })
+    @Sql({ "classpath:/resources/sqls/customer.sql" })
+    void findByNameWrongAndAddressTest() {
+        var exception = assertThrows(ObjectNotFound.class, () -> service.findByNameContainingIgnoreCaseAndAddress("z",addressService.findById(1)));
+        assertEquals("Nenhum cliente encontrado para esse nome z e endereço rua Laguna bairro Oficinas", exception.getMessage());
     }
 
 }

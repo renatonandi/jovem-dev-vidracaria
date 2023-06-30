@@ -18,6 +18,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer>{
     
     List<Customer> findByDiscount(Discount discount);
     
+    List<Customer> findByNameContainingIgnoreCaseAndAddress(String name, Address address);
+    
     
 
 }

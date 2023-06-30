@@ -57,12 +57,12 @@ public class TypeResourceTest {
 				});
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
 	}
-	
+
 	@Test
     @DisplayName("Cadastrar tipo")
 	@Sql({ "classpath:/resources/sqls/clear_table.sql" })
 	@Sql({ "classpath:/resources/sqls/user.sql" })
-    public void testCreateUser() {
+    public void insertTypeTest() {
         Type type = new Type(null, "Bronze");
         LoginDTO loginDTO = new LoginDTO("email1@gmail.com", "123");
         HttpHeaders headers = new HttpHeaders();
@@ -87,7 +87,7 @@ public class TypeResourceTest {
 	@Sql({ "classpath:/resources/sqls/clear_table.sql" })
 	@Sql({ "classpath:/resources/sqls/type.sql" })
 	@Sql({ "classpath:/resources/sqls/user.sql" })
-	public void testCreateTypeDuplicatedDescription() {
+	public void insertTypeDuplicatedDescriptionTest() {
 		Type type = new Type(null, "Bronze");
 		LoginDTO loginDTO = new LoginDTO("email1@gmail.com", "123");
 		HttpHeaders headers = new HttpHeaders();
@@ -111,7 +111,7 @@ public class TypeResourceTest {
 	@Sql({ "classpath:/resources/sqls/clear_table.sql" })
 	@Sql({ "classpath:/resources/sqls/type.sql" })
 	@Sql({ "classpath:/resources/sqls/user.sql" })
-    public void testUpdateUser() {
+    public void updateTypeTest() {
         Type type = new Type(1, "BronzeNovo");
         LoginDTO loginDTO = new LoginDTO("email1@gmail.com", "123");
         HttpHeaders headers = new HttpHeaders();
@@ -136,7 +136,7 @@ public class TypeResourceTest {
 	@Sql({ "classpath:/resources/sqls/clear_table.sql" })
 	@Sql({ "classpath:/resources/sqls/type.sql" })
 	@Sql({ "classpath:/resources/sqls/user.sql" })
-	public void testUpdateTypeDuplicatedDescription() {
+	public void updateTypeDuplicatedDescriptionTest() {
 		Type type = new Type(2, "Bronze");
 		LoginDTO loginDTO = new LoginDTO("email1@gmail.com", "123");
 		HttpHeaders headers = new HttpHeaders();
@@ -160,7 +160,7 @@ public class TypeResourceTest {
 	@Sql({ "classpath:/resources/sqls/clear_table.sql" })
 	@Sql({ "classpath:/resources/sqls/type.sql" })
 	@Sql({ "classpath:/resources/sqls/user.sql" })
-	public void testUpdateTypeNonExist() {
+	public void updateTypeNonExistTest() {
 		Type type = new Type(10, "Bronze");
 		LoginDTO loginDTO = new LoginDTO("email1@gmail.com", "123");
 		HttpHeaders headers = new HttpHeaders();
@@ -184,7 +184,7 @@ public class TypeResourceTest {
 	@Sql({ "classpath:/resources/sqls/clear_table.sql" })
 	@Sql({ "classpath:/resources/sqls/type.sql" })
 	@Sql({ "classpath:/resources/sqls/user.sql" })
-    public void testDeleteUser() {
+    public void deleteTypeTest() {
         LoginDTO loginDTO = new LoginDTO("email1@gmail.com", "123");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -207,7 +207,7 @@ public class TypeResourceTest {
 	@Sql({ "classpath:/resources/sqls/clear_table.sql" })
 	@Sql({ "classpath:/resources/sqls/type.sql" })
 	@Sql({ "classpath:/resources/sqls/user.sql" })
-	public void testDeleteTypeNonExist() {
+	public void deleteTypeNonExistTest() {
 		LoginDTO loginDTO = new LoginDTO("email1@gmail.com", "123");
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -256,7 +256,7 @@ public class TypeResourceTest {
 	@Sql({ "classpath:/resources/sqls/clear_table.sql" })
 	@Sql({ "classpath:/resources/sqls/type.sql" })
 	@Sql({ "classpath:/resources/sqls/user.sql" })
-	public void testGetOk() {
+	public void findByIdTest() {
 		LoginDTO loginDTO = new LoginDTO("email1@gmail.com", "123");
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -280,7 +280,7 @@ public class TypeResourceTest {
 	@Sql({ "classpath:/resources/sqls/clear_table.sql" })
 	@Sql({ "classpath:/resources/sqls/type.sql" })
 	@Sql({ "classpath:/resources/sqls/user.sql" })
-    public void testGetNotFound() {
+    public void findByIdNonExistTest() {
         LoginDTO loginDTO = new LoginDTO("email1@gmail.com", "123");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -303,7 +303,7 @@ public class TypeResourceTest {
 	@Sql({ "classpath:/resources/sqls/clear_table.sql" })
 	@Sql({ "classpath:/resources/sqls/type.sql" })
 	@Sql({ "classpath:/resources/sqls/user.sql" })
-	public void findByDescription() {
+	public void findByDescriptionTest() {
 		LoginDTO loginDTO = new LoginDTO("email1@gmail.com", "123");
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -329,7 +329,7 @@ public class TypeResourceTest {
 	@Sql({ "classpath:/resources/sqls/clear_table.sql" })
 	@Sql({ "classpath:/resources/sqls/type.sql" })
 	@Sql({ "classpath:/resources/sqls/user.sql" })
-	public void findByDescriptionWrong() {
+	public void findByDescriptionWrongTest() {
 		LoginDTO loginDTO = new LoginDTO("email1@gmail.com", "123");
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);

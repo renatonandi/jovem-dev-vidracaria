@@ -13,9 +13,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @EqualsAndHashCode(of = "id")
 @Entity(name = "venda")
 public class Sale {
@@ -41,7 +41,7 @@ public class Sale {
     }
     
     public SaleDTO toDTO() {
-    	return new SaleDTO(id, size, request.getId(), request.getDescription(), request.getCustomer().getId(), request.getCustomer().getName(), product.getId());
+    	return new SaleDTO(id, size, request.getId(), request.getDescription(), request.getCustomer().getId(), request.getCustomer().getName(), product.getId(), product.getName());
     }
     
 }

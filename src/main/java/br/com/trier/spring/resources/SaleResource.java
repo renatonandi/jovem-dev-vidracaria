@@ -35,7 +35,7 @@ public class SaleResource {
     
     @Secured({ "ROLE_ADMIN" })
     @PostMapping
-    public ResponseEntity<SaleDTO> insert(@RequestBody SaleDTO productRequestDTO) {
+    public ResponseEntity<SaleDTO> insert(@RequestBody SaleDTO productRequestDTO) { 
         return ResponseEntity.ok(service.insert(new Sale(productRequestDTO, requestService.findById(productRequestDTO.getRequestId()), productService.findById(productRequestDTO.getProductId()))).toDTO());
     }
 

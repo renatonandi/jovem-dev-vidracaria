@@ -57,9 +57,9 @@ public class DiscountResource {
     }
 
     @Secured({ "ROLE_USER" })
-    @GetMapping("/desconto/{discount}")
-    public ResponseEntity<List<Discount>> findByDescription(@PathVariable Integer discount) {
-        return ResponseEntity.ok(service.findByDiscount(discount));
+    @GetMapping("/desconto/{idDiscount}")
+    public ResponseEntity<List<Discount>> findByDescription(@PathVariable Integer idDiscount) {
+        return ResponseEntity.ok(service.findByDiscount(idDiscount));
     }
 
 }

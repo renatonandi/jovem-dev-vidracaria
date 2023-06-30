@@ -85,13 +85,25 @@ public class CityServiceTest extends BaseTests {
     }
 
     @Test
+    @DisplayName("Teste alterar cidade passando UF inválida")
+    @Sql({ "classpath:/resources/sqls/city.sql" })
+    void updateCityByIdUfInvalidTest() {
+        var city = service.findById(1);
+        assertEquals("Tubarão", city.getName());
+        City alteredCity = new City(1, "CidadeAlterada", "S"); 
+        var exception = assertThrows(IntegrityViolation.class, () -> service.update(alteredCity));
+        assertEquals("O estado não pode conter menos que dois caracteres", exception.getMessage());
+        City alteredCity2 = new City(1, "CidadeAlterada", "SSS");
+        var ex = assertThrows(IntegrityViolation.class, () -> service.update(alteredCity2));
+        assertEquals("O estado não pode conter mais que dois caracteres", ex.getMessage());
+    }
+
+    @Test
     @DisplayName("Teste alterar cidade inexistente")
     void updateCityByIdNonExistsTest() {
-
-        City AlteredCity = new City(1, "CidadeAlterada", "SC");
-        var exception = assertThrows(ObjectNotFound.class, () -> service.update(AlteredCity));
+        City alteredCity = new City(1, "CidadeAlterada", "SC");
+        var exception = assertThrows(ObjectNotFound.class, () -> service.update(alteredCity));
         assertEquals("A cidade 1 não existe", exception.getMessage());
-
     }
 
     @Test
@@ -161,6 +173,14 @@ public class CityServiceTest extends BaseTests {
     void findByNameAndUfWrongTest() {
         var exception = assertThrows(ObjectNotFound.class, () -> service.findByNameContainingIgnoreCaseAndUfIgnoreCase("tu","US"));
         assertEquals("Nenhuma cidade encontrada para esse nome tu e para essa UF US", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Teste buscar cidade por nome incorreto e UF")
+    @Sql({ "classpath:/resources/sqls/city.sql" })
+    void findByNameWrongAndUfTest() {
+        var exception = assertThrows(ObjectNotFound.class, () -> service.findByNameContainingIgnoreCaseAndUfIgnoreCase("Z","US"));
+        assertEquals("Nenhuma cidade encontrada para esse nome Z e para essa UF US", exception.getMessage());
     }
     
     @Test

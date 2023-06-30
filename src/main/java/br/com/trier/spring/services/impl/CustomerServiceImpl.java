@@ -79,4 +79,13 @@ public class CustomerServiceImpl implements CustomerService{
         }
         return list;
     }
+
+    @Override
+    public List<Customer> findByNameContainingIgnoreCaseAndAddress(String name, Address address) {
+        List<Customer> list = repository.findByNameContainingIgnoreCaseAndAddress(name, address);
+        if (list.isEmpty()) {
+            throw new ObjectNotFound("Nenhum cliente encontrado para esse nome %s e endereço rua %s bairro %s".formatted(name, address.getStreet(), address.getNeighborhood()));
+        }
+        return list;
+    }
 }

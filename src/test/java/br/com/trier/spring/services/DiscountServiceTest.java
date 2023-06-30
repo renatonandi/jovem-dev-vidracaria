@@ -11,6 +11,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import br.com.trier.spring.BaseTests;
 import br.com.trier.spring.models.Discount;
+import br.com.trier.spring.services.exceptions.IntegrityViolation;
 import br.com.trier.spring.services.exceptions.ObjectNotFound;
 import jakarta.transaction.Transactional;
 
@@ -45,6 +46,17 @@ public class DiscountServiceTest extends BaseTests{
         assertEquals(1, search.getId());
         assertEquals(5, search.getDiscount());
        
+    }
+
+    @Test
+    @DisplayName("Teste inserir desconto com valor inválido")
+    void insertDiscountInvalidTest() {
+        Discount discount = new Discount(null, -100);
+        var exception = assertThrows(IntegrityViolation.class, () -> service.insert(discount));
+        assertEquals("Desconto inválido. Valor não pode ser menor ou igual a zero", exception.getMessage());
+        Discount discount2 = new Discount(null, 0);
+        var exception2 = assertThrows(IntegrityViolation.class, () -> service.insert(discount2));
+        assertEquals("Desconto inválido. Valor não pode ser menor ou igual a zero", exception2.getMessage());
     }
 
     @Test

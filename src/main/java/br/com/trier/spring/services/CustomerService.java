@@ -24,5 +24,7 @@ public interface CustomerService {
     List<Customer> findByAddress(Address address);
 
     List<Customer> findByDiscount(Discount discount);
+    
+    List<Customer> findByNameContainingIgnoreCaseAndAddress(String name, Address address);
 
 }
